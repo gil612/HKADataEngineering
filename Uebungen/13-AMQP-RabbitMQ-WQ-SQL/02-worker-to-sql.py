@@ -21,11 +21,10 @@ import pyodbc
 # initialize random with current system time
 random.seed()
 # SQL server connection
-server='md2c0gdc' 
+server='DESKTOP-7GQKTPR' 
 database='HKA_AMQP' 
-username='sa' 
-password='KWmz6QOHDPLIPqzJD9t2' 
-cnxn= pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
+username='DESKTOP-7GQKTPR\gilbaram' 
+cnxn= pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';Trusted_Connection=yes;')
 cursor=cnxn.cursor()
 
 connection = pika.BlockingConnection(

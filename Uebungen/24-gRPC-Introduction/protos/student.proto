@@ -11,6 +11,8 @@ service Students {
     rpc ListStudent(Name) returns (Student) {}
     // method accepts the faculty and returns all students as a stream
     rpc ListStudents(Faculty) returns (stream Student){}
+    rpc ListLecturer(Lec_Name) returns (stream Lecturer){}
+    rpc ListLecturers(Faculty) returns (stream Lecturer){}
 }
 
 // class definition for Name
@@ -20,6 +22,25 @@ message Name{
     // field 2
     string givenname = 2;
 }
+
+// class definition for Name
+message Lec_Name{
+    // field 1
+    string title = 1;
+}
+
+// class definition of Student
+message Lecturer{
+    // field 1
+    Lec_Name name = 1;
+    // field 2
+    Faculty faculty = 2;
+    // field 3
+    int32 yearOfBirth = 3;
+    // field 4
+    bool exists = 4;
+}
+
 
 // class definition of Student
 message Student{

@@ -25,6 +25,16 @@ class StudentsStub(object):
                 request_serializer=student__pb2.Faculty.SerializeToString,
                 response_deserializer=student__pb2.Student.FromString,
                 )
+        self.ListLecturer = channel.unary_stream(
+                '/Students/ListLecturer',
+                request_serializer=student__pb2.Lec_Name.SerializeToString,
+                response_deserializer=student__pb2.Lecturer.FromString,
+                )
+        self.ListLecturers = channel.unary_stream(
+                '/Students/ListLecturers',
+                request_serializer=student__pb2.Faculty.SerializeToString,
+                response_deserializer=student__pb2.Lecturer.FromString,
+                )
 
 
 class StudentsServicer(object):
@@ -45,6 +55,18 @@ class StudentsServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ListLecturer(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ListLecturers(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_StudentsServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -57,6 +79,16 @@ def add_StudentsServicer_to_server(servicer, server):
                     servicer.ListStudents,
                     request_deserializer=student__pb2.Faculty.FromString,
                     response_serializer=student__pb2.Student.SerializeToString,
+            ),
+            'ListLecturer': grpc.unary_stream_rpc_method_handler(
+                    servicer.ListLecturer,
+                    request_deserializer=student__pb2.Lec_Name.FromString,
+                    response_serializer=student__pb2.Lecturer.SerializeToString,
+            ),
+            'ListLecturers': grpc.unary_stream_rpc_method_handler(
+                    servicer.ListLecturers,
+                    request_deserializer=student__pb2.Faculty.FromString,
+                    response_serializer=student__pb2.Lecturer.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -100,5 +132,39 @@ class Students(object):
         return grpc.experimental.unary_stream(request, target, '/Students/ListStudents',
             student__pb2.Faculty.SerializeToString,
             student__pb2.Student.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ListLecturer(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/Students/ListLecturer',
+            student__pb2.Lec_Name.SerializeToString,
+            student__pb2.Lecturer.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ListLecturers(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/Students/ListLecturers',
+            student__pb2.Faculty.SerializeToString,
+            student__pb2.Lecturer.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

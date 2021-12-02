@@ -15,11 +15,20 @@ import pandas as pd
 
 fake=Faker()
 
-# read students of faculty WI-IWI from csv-file
-def read_students_database()->pd.DataFrame:
-    df=pd.read_csv('../../data/students.csv',delimiter=';')
+# read lecturers of faculty WI-IWI from csv-file
+def read_lecturers_database()->pd.DataFrame:
+    df=pd.read_csv('src\python\lecs.csv')
     df['facultyname']=student_pb2.Faculty.FacultyName.InformatikWirtschaftsinformatik
     return df
+
+
+# read students of faculty WI-IWI from csv-file
+def read_students_database()->pd.DataFrame:
+    df=pd.read_csv('src\python\students.csv',delimiter=';')
+    df['facultyname']=student_pb2.Faculty.FacultyName.InformatikWirtschaftsinformatik
+    return df   
+
+
 
 # check whether student exists and return information from dataframe
 def get_student(students_db,name:student_pb2.Name):
@@ -43,6 +52,30 @@ def get_student(students_db,name:student_pb2.Name):
             faculty=student_pb2.Faculty(facultyname=0),
             yearOfBirth=0,
             exists=False
+        )     
+
+# check whether lecturer exists and return information from dataframe
+def get_lecturer(lecturers_db,name:student_pb2.Lec_Name):
+    # filter dataframe by surname and givenname
+    df=lecturers_db[(lecturers_db['title'] == name.title)]
+    # check whether lecturer exists
+    if df.shape[0]>0:
+        # create lecturer information (as defined in lecturer.proto)
+        lecturer=student_pb2.Lecturer(
+            name=name,
+            faculty=student_pb2.Faculty(facultyname=3),
+            yearOfBirth=fake.random_int(min=17,max=35,step=1),
+            exists=True
+        )
+        return lecturer
+    else:
+        # lecturer does not exist
+        # create lecturer information (as defined in student.proto)
+        return student_pb2.Lecturer(
+            name=name,
+            faculty=student_pb2.Faculty(facultyname=0),
+            yearOfBirth=0,
+            exists=False
         )
 
 # get random student information (as defined in student.proto)
@@ -55,18 +88,37 @@ def get_student_random():
         faculty=student_pb2.Faculty(facultyname=3),
         yearOfBirth=fake.random_int(min=17,max=35,step=1)
     )
-    return student
+    return student       
+
+# get random lecturer information (as defined in student.proto)
+def get_lecturer_random():
+    lecturer=student_pb2.Lecturer(
+        name =student_pb2.Lec_Name(
+            title = fake.name()
+        ),
+        faculty=student_pb2.Faculty(facultyname=3),
+        yearOfBirth=fake.random_int(min=17,max=35,step=1)
+    )
+    return lecturer
 
 # implement StudentsServicer (service Students as defined in student.proto)
 class StudentServicer(student_pb2_grpc.StudentsServicer):
     def __init__(self):
         self.students_db=read_students_database()
-
-    # interface defined in proto file
+        self.lecturers_db=read_lecturers_database()
+        
+   # interface defined in proto file
     def ListStudent(self, request, context):
         # get information about student from dataframe
         student=get_student(self.students_db,request)
         return student
+
+    # interface defined in proto file
+    def ListLecturer(self, request, context):
+        # get information about lecturer from dataframe
+        lecturer=get_lecturer(self.lecturers_db,request)
+        return lecturer
+
 
     # interface defined in proto file
     # parameter request contains the faculty
@@ -89,7 +141,29 @@ class StudentServicer(student_pb2_grpc.StudentsServicer):
                     yearOfBirth=fake.random_int(min=17,max=35,step=1),
                     exists=True
                 )
-                yield student
+                yield student    
+
+    # interface defined in proto file
+    # parameter request contains the faculty
+    def ListLecturers(self, request, context):
+        # create random information and stream for ever if no faculty is specified
+        if request.facultyname==student_pb2.Faculty.FacultyName.Unspecified:
+            while(True):
+                yield get_lecturer_random()
+        else:
+            # search in dataframe lecturers_db for lecturers that belong to the specified faculty
+            df=self.lecturers_db[self.lecturers_db['facultyname']==request.facultyname]
+            for index,row in df.iterrows():
+                # create lecturer information (as defined in student.proto)
+                lecturer=student_pb2.Lecturer(
+                    name=student_pb2.Lec_Name(
+                        title=row['title']
+                    ),
+                    faculty=request, # student_pb2.Faculty(facultyname=3),
+                    yearOfBirth=fake.random_int(min=17,max=35,step=1),
+                    exists=True
+                )
+                yield lecturer
     
 def serve():
     # instantiate the grpc server
