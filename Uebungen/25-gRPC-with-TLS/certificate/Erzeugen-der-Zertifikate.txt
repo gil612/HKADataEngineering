@@ -1,0 +1,7 @@
+# for an introduction for certificates see https://www.sandtable.com/using-ssl-with-grpc-in-python/
+# creation of self-signed certificate with openssl
+# 1) Öffnen einer git bash
+# IMPORTANT: "Common Name" must match the hostname of the laptop
+# 2) openssl req -newkey rsa:2048 -nodes -keyout server.key -x509 -days 365 -out server.crt
+# Der private Schlüssel wird in der DAtei server.key gespeichert.
+# Der öffentliche Schlüssel befindet sich in der Datei server.crt

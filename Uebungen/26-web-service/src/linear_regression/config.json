@@ -1,0 +1,13 @@
+{
+    "packageName":"linearregression_service",
+    "projectName":"linearregression_service",
+    "packageVersion":"0.0.1",
+    "HOST": "0.0.0.0",
+    "GRPCPORT": "50051",
+    "DEBUG": "False",
+    "SERVER": "md2c0gdc",
+    "DBSRC": "HKA_functionguessing",
+    "DBLINEARREGRESSION": "HKA_linearregression",
+    "UID": "sa",
+    "PWD": "KWmz6QOHDPLIPqzJD9t2"    
+}

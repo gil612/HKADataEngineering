@@ -1,0 +1,4 @@
+Quelle:
+https://github.com/microsoft/sql-server-samples/tree/master/samples/databases
+
+Ausführen des Skripts instnwnd.sql mit Microsoft SQL Server Management Studio.

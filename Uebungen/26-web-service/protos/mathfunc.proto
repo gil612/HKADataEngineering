@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+// Interface exported by the server
+service MathFunc {
+    // method fits a function to a given data set
+    rpc GuessFunction(FunctionDescription) returns (State) {}
+    // method deletes the results (fitted function) for all data sets
+	rpc Delete(DelMsg) returns (DelState) {}
+}
+
+// class definition for FunctionDescription
+message FunctionDescription {
+    // field 1, function identifier
+    int32 id = 1;
+}
+
+message State {
+    // field 1
+    bool scheduling = 1;
+	// field 2
+	bool scheduled = 2;
+    // field 3
+    bool resultready = 3;
+}
+
+message DelMsg{
+}
+message DelState{
+}

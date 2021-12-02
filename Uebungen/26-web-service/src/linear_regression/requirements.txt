@@ -1,0 +1,8 @@
+# tested with python 3.10.0
+# upgrade pip
+wheel
+grpcio
+grpcio-tools
+pyodbc
+lmfit
+pandas

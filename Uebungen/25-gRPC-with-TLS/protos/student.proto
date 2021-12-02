@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.hka.students";
+option java_outer_classname = "StudentsProto";
+option objc_class_prefix = "HKAS";
+
+// Interface exported by the server
+service Students {
+    // method accepts the name of a student and returns an instance of Student (including full information)
+    rpc ListStudent(Name) returns (Student) {}
+    // method accepts the faculty and returns all students as a stream
+    rpc ListStudents(Faculty) returns (stream Student){}
+}
+
+// class definition for Name
+message Name{
+    // field 1
+    string surname = 1;
+    // field 2
+    string givenname = 2;
+}
+
+// class definition of Student
+message Student{
+    // field 1
+    Name name = 1;
+    // field 2
+    Faculty faculty = 2;
+    // field 3
+    int32 yearOfBirth = 3;
+    // field 4
+    bool exists = 4;
+}
+
+// class definition of Faculty
+message Faculty{
+    enum FacultyName{
+        Unspecified=0;
+        ArchitekturBauwesen=1;
+        ElektroInformationstechnik=2;
+        InformatikWirtschaftsinformatik=3;
+        InformationsmanagementMedien=4;
+        MaschinenbauMechatronik=5;
+        Wirtschaftswissenschaften=6;
+    }
+    // field 1
+    FacultyName facultyname=1;
+}

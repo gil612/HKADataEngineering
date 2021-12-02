@@ -1,0 +1,6 @@
+# tested with python 3.10.0
+wheel
+grpcio
+grpcio-tools
+pandas
+faker

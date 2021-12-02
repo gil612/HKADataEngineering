@@ -1,0 +1,9 @@
+# tested with python 3.10.0
+# upgrade pip
+wheel
+pyodbc
+numpy
+flask
+flasgger
+grpcio
+grpcio-tools
