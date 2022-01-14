@@ -1,0 +1,6 @@
+# tested with python 3.10.1
+# apache spark, see https://phoenixnap.com/kb/install-spark-on-windows-10
+wheel
+pyspark
+nltk
+numpy

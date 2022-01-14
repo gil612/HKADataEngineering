@@ -135,3 +135,14 @@ Uebungen/08-SPARQL/08-SPARQL-elephant.py
 Uebungen/14-OPC-UA-Siemens-intern/
 Uebungen/15-OPC-UA/UA-.NETStandard-Samples-master/
 Uebungen/17-OPC-UA-server-python/opcua-asyncio-master/
+
+# ignore sub folders
+Uebungen/26-web-service/src/genetic_programming/data/
+Uebungen/32-wide-world-importers/
+Uebungen/34-Apache-Spark-ML-Claims/patent_claims_excerpt2.csv
+Uebungen/34-Apache-Spark-ML-Claims/patent_claims_fulltext.csv*
+
+
+# certificates
+*.crt
+*.key

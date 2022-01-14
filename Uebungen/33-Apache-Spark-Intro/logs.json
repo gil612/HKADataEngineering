@@ -1,0 +1,16 @@
+{
+    "Persons" : [
+        {
+            "name": "Muster",
+            "age": 22
+        },
+        {
+            "name": "Mueller",
+            "age": 23
+        },
+        {
+            "name": "Meier",
+            "age": 24
+        }
+    ]
+}
